@@ -11,10 +11,14 @@ mainWidget.objectName = "qSlicerAppMainWindow"
 vlayout = qt.QVBoxLayout()
 mainWidget.setLayout(vlayout)
 
-layoutManager = slicer.qMRMLLayoutWidget()
+layoutWidget = slicer.qMRMLLayoutWidget()
+layoutManager = slicer.qSlicerLayoutManager()
 layoutManager.setMRMLScene(slicer.mrmlScene)
-layoutManager.setLayout(slicer.vtkMRMLLayoutNode.SlicerLayoutOneUp3DView)
-vlayout.addWidget(layoutManager)
+layoutManager.setScriptedDisplayableManagerDirectory(slicer.app.slicerHome + "/bin/Python/mrmlDisplayableManager")
+layoutWidget.setLayoutManager(layoutManager)
+slicer.app.setLayoutManager(layoutManager)
+layoutWidget.setLayout(slicer.vtkMRMLLayoutNode.SlicerLayoutFourUpView)
+vlayout.addWidget(layoutWidget)
 
 hlayout = qt.QHBoxLayout()
 vlayout.addLayout(hlayout)
@@ -41,5 +45,3 @@ for module in modules:
 
 mainWidget.show()
 __main__.mainWidget = mainWidget
-
-
